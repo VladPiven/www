@@ -5,72 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Travel Planner</title>
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            background-color: #eef6ff;
+            background-image: url("images/travel-bg.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            background: rgba(255, 255, 255, 0.9);
+            margin: 20px auto;
+            padding: 25px;
+            width: 90%;
+            border-radius: 15px;
+        }
+
+        header, nav {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            text-align: center;
+        }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        img {
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        table {
+            margin: 20px 0;
+            width: 100%;
+            background-color: white;
+        }
+
+        th {
+            background-color: #6ab7ff;
+            color: white;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #6ab7ff;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
-<!-- Modal Create Trip -->
-<div id="create-trip-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h2>Plan New Trip</h2>
-        <form id="create-trip-form">
-            <div class="form-group">
-                <label>Trip Title </label>
-                <input type="text" id="trip-title-input" required>
-            </div>
+<body link="#0066cc" vlink="#663399" alink="#ff6600">
 
-            <div style="display: flex; gap: 1rem;">
-                <div class="form-group" style="flex: 1;">
-                    <label>Start Date</label>
-                    <input type="date" id="trip-start" required>
+    <!-- MODAL CREATE TRIP -->
+    <div id="create-trip-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Plan New Trip</h2>
+
+            <form id="create-trip-form">
+                <div class="form-group">
+                    <label>Trip Title</label>
+                    <input type="text" id="trip-title-input" required>
                 </div>
 
-                <div class="form-group" style="flex: 1;">
-                    <label>End Date</label>
-                    <input type="date" id="trip-end" required>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Start Date</label>
+                        <input type="date" id="trip-start" required>
+                    </div>
+
+                    <div class="form-group" style="flex: 1;">
+                        <label>End Date</label>
+                        <input type="date" id="trip-end" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label>Estimated Budget</label>
-                <input type="number" id="trip-budget" min="1" required>
-            </div>
+                <div class="form-group">
+                    <label>Estimated Budget</label>
+                    <input type="number" id="trip-budget" min="1" required>
+                </div>
 
-            <div class="form-group">
-                <label>Main Currency</label>
-                <select id="trip-currency">
-                    <option value="EUR">EUR (€)</option>
-                    <option value="USD">USD ($)</option>
-                    <option value="UAH">UAH (₴)</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Main Currency</label>
+                    <select id="trip-currency">
+                        <option value="EUR">EUR (€)</option>
+                        <option value="USD">USD ($)</option>
+                        <option value="UAH">UAH (₴)</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label>Cover Image URL (Optional)</label>
-                <input type="url" id="trip-image" placeholder="https://unsplash.com/...">
-            </div>
+                <div class="form-group">
+                    <label>Cover Image URL</label>
+                    <input type="url" id="trip-image" placeholder="https://example.com/image.jpg">
+                </div>
 
-            <div class="modal-actions">
-                <button type="button" id="close-modal-btn" class="btn">Cancel</button>
-                <button type="submit" class="btn btn-success">Create & Lock Currency</button>
-            </div>
-        </form>
+                <div class="modal-actions">
+                    <button type="button" id="close-modal-btn" class="btn">Cancel</button>
+                    <button type="submit" class="btn btn-success">Create & Lock Currency</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<body>
 
     <!-- NAVIGATION -->
-    <nav style="padding: 15px; display: flex; gap: 10px; justify-content: center;">
-        <a href="index.html">
-            <button class="btn">Page 1</button>
-        </a>
-
-        <a href="page2.html">
-            <button class="btn">Page 2</button>
-        </a>
-
-        <a href="page3.html">
-            <button class="btn">Page 3</button>
-        </a>
+    <nav>
+        <a href="index.html">Page 1</a> |
+        <a href="page2.html">Page 2</a> |
+        <a href="page3.html">Page 3</a> |
+        <a href="#travel-table">Перейти до таблиці на цій сторінці</a> |
+        <a href="page2.html#budget-section">Перейти до бюджету на іншій сторінці</a> |
+        <a href="https://www.booking.com" target="_blank">Booking.com</a>
     </nav>
 
     <header>
@@ -79,14 +128,31 @@
     </header>
 
     <main>
-        <section id="auth-section" class="center-content">
+
+        <section id="intro">
             <h2>Welcome to your journey</h2>
+
+            <p>
+                <b>Personal Travel Planner</b> — це зручна сторінка для планування подорожей,
+                де можна створювати поїздки, додавати бюджет, дати та основну валюту.
+            </p>
+
+            <p>
+                За допомогою такого сервісу користувач може <i>швидко організувати маршрут</i>,
+                зберігати важливу інформацію та краще контролювати витрати під час подорожі.
+            </p>
+
+            <p>
+                Подорожі стають простішими, коли всі дані зібрані в одному місці:
+                напрямок, дата, бюджет, список справ і корисні посилання.
+            </p>
+
             <button id="login-btn" class="btn btn-primary">
                 Sign in with Google
             </button>
         </section>
 
-        <section id="dashboard-section" class="hidden">
+        <section id="dashboard-section">
             <div class="dashboard-header">
                 <h2>Active Trips</h2>
                 <button id="add-trip-btn" class="btn btn-success">
@@ -99,22 +165,169 @@
             </div>
         </section>
 
-        <table border="1">
-    <tr>
-        <th>Ім’я</th>
-        <th>Вік</th>
-    </tr>
-    
-    <tr>
-        <td>Анна</td>
-        <td>20</td>
-    </tr>
-    
-    <tr>
-        <td>Олег</td>
-        <td>22</td>
-    </tr>
-</table>
+        <section id="images">
+    <h2>Travel Images</h2>
+
+    <p>
+        Нижче подані приклади зображень для туристичної тематики.
+        Натисни на першу картинку, щоб відкрити її у повному розмірі в новому вікні.
+    </p>
+
+    <!-- КАРТИНКА-ГІПЕРПОСИЛАННЯ -->
+    <a href="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1600"
+       target="_blank">
+
+        <img
+            src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=800"
+            width="300"
+            height="200"
+            alt="Paris">
+    </a>
+
+    <!-- ЗМЕНШЕНА В 2 РАЗИ -->
+    <img
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800"
+        width="150"
+        height="100"
+        alt="Mountains">
+
+    <!-- ЗБІЛЬШЕНА В 2 РАЗИ -->
+    <img
+        src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?q=80&w=1200"
+        width="600"
+        height="400"
+        alt="Beach">
+</section>
+
+        <section id="lists">
+            <h2>Travel Lists</h2>
+
+            <h3>Що взяти у подорож</h3>
+            <ul type="square">
+                <li>Паспорт</li>
+                <li>Квитки</li>
+                <li>Зарядний пристрій</li>
+                <li>Гроші або банківську карту</li>
+            </ul>
+
+            <h3>Етапи планування поїздки</h3>
+            <ol type="I">
+                <li>Обрати країну</li>
+                <li>Забронювати житло</li>
+                <li>Скласти маршрут</li>
+                <li>Розрахувати бюджет</li>
+            </ol>
+
+            <h3>Основні поняття</h3>
+            <dl>
+                <dt><b>Budget</b></dt>
+                <dd>Сума грошей, яку турист планує витратити на подорож.</dd>
+
+                <dt><b>Destination</b></dt>
+                <dd>Місце або країна, куди планується поїздка.</dd>
+
+                <dt><b>Route</b></dt>
+                <dd>Маршрут пересування під час подорожі.</dd>
+            </dl>
+        </section>
+
+        <section id="travel-table">
+            <h2>Проста таблиця 3 × 4</h2>
+
+            <table border="1" cellpadding="10" cellspacing="0">
+                <caption><b>Популярні напрямки для подорожей</b></caption>
+
+                <tr>
+    <td>
+        <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=600"
+             width="120"
+             height="80">
+    </td>
+
+    <td>
+        <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=600"
+             width="120"
+             height="80">
+    </td>
+
+    <td>
+        <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=600"
+             width="120"
+             height="80">
+    </td>
+
+    <td>
+        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=600"
+             width="120"
+             height="80">
+    </td>
+</tr>
+            </table>
+        </section>
+
+        <section id="complex-table">
+            <h2>Складна таблиця</h2>
+
+            <table border="1" cellpadding="12" cellspacing="5">
+                <caption><b>План подорожі</b></caption>
+
+                <colgroup>
+                    <col style="background-color: #e3f2fd;">
+                    <col style="background-color: #f1f8e9;">
+                    <col style="background-color: #fff8e1;">
+                    <col style="background-color: #fce4ec;">
+                </colgroup>
+
+                <tr align="center">
+                    <th colspan="4">Travel Plan 2026</th>
+                </tr>
+
+                <tr align="center">
+                    <th>День</th>
+                    <th>Місто</th>
+                    <th>Активність</th>
+                    <th>Бюджет</th>
+                </tr>
+
+                <tr align="left">
+                    <td rowspan="2">День 1</td>
+                    <td>Париж</td>
+                    <td>Прогулянка центром міста</td>
+                    <td>50 EUR</td>
+                </tr>
+
+                <tr align="right">
+                    <td>Париж</td>
+                    <td>Відвідування музею</td>
+                    <td>30 EUR</td>
+                </tr>
+
+                <tr align="center">
+                    <td>День 2</td>
+                    <td colspan="2">Екскурсія та шопінг</td>
+                    <td>100 EUR</td>
+                </tr>
+
+                <tr valign="top">
+                    <td>День 3</td>
+                    <td>Версаль</td>
+                    <td>Поїздка за місто, огляд палацу та парку</td>
+                    <td>70 EUR</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="frame">
+            <h2>Плаваючий фрейм</h2>
+
+            <p>
+                Нижче вставлено плаваючий фрейм, у якому може відкриватися інша сторінка сайту
+                або зовнішній ресурс.
+            </p>
+
+            <iframe src="page2.html" name="travel-frame"></iframe>
+        </section>
+
     </main>
 
     <script type="module" src="js/app.js"></script>
