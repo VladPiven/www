@@ -1,0 +1,275 @@
+/* Дизайн Табів */
+.tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+}
+
+.tab-btn:hover {
+    color: var(--text-main);
+    background: transparent;
+}
+
+.tab-btn.active {
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0;
+}
+
+/* Список витрат */
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--glass-bg);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    transition: 0.2s;
+}
+
+.expense-item:hover {
+    border-color: var(--glass-border);
+    transform: translateX(5px);
+}
+
+.expense-info h4 {
+    margin-bottom: 0.3rem;
+}
+
+.expense-info small {
+    color: #aaa;
+}
+
+.expense-amount {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--danger);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.table-section {
+    margin-bottom: 3rem;
+}
+
+.btn-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: grayscale(1);
+}
+
+.btn-del:hover {
+    filter: grayscale(0);
+}
+
+/* trip-detail.css */
+.row-planned {
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+.btn-confirm {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-right: 5px;
+    transition: transform 0.2s;
+}
+
+.btn-confirm:hover {
+    transform: scale(1.2);
+}
+
+.tab-content {
+    display: none; /* Ховаємо за замовчуванням */
+}
+
+.tab-content.active {
+    display: block; /* Показуємо тільки активний */
+}
+
+/* Робимо контент табів на всю доступну висоту */
+.tab-content {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Карта на весь екран всередині таби */
+#map-view {
+    height: calc(100vh - 250px); /* Вираховуємо висоту мінус хедер */
+    min-height: 500px;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+/* Стилі для результатів пошуку міста */
+.geocoder-input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.badge-plan {
+    background: #ffa502;
+    color: black;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+/* Контейнер пошуку */
+#geocoder-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Випадаючий список результатів */
+.geocoder-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1e272e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: none;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #dfe6e9;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+    background: #485460;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Кастомний маркер на карті */
+.custom-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Пошук та Dropdown */
+#geocoder-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.geocoder-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #2d3436;
+    border: 1px solid #00ff88;
+    z-index: 9999 !important; /* Щоб було поверх всього */
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 0 0 8px 8px;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.dropdown-item:hover {
+    background: #00ff88;
+    color: #000;
+}
+
+/* Кнопка редагування бюджету */
+.btn-edit-small {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    opacity: 0.6;
+}
+
+.btn-edit-small:hover { opacity: 1; }
+
+/* Категорії у вигляді плашок */
+.category-list {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.cat-chip {
+    background: rgba(255,255,255,0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255,255,255,0.2);
+}

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деталі подорожі | Travel Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Leaflet & Geocoder CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <style>
+        /* Стилі для групування міст у таблицях */
+        .group-row td {
+            background: rgba(0, 255, 136, 0.1) !important;
+            color: #00ff88;
+            font-weight: bold;
+            padding: 10px !important;
+            border-left: 4px solid #00ff88;
+            text-align: left;
+        }
+        .row-planned { opacity: 0.7; font-style: italic; }
+        
+        /* Стилі для блоку пошуку місць */
+        .search-box { position: relative; width: 100%; }
+        .geocoder-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #2d3436;
+            border: 1px solid #636e72;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #444;
+            color: white;
+        }
+        .dropdown-item:hover { background: #0984e3; }
+
+        /* Календарний фікс */
+        .date-input-wrapper { position: relative; }
+        .date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+            z-index: 2;
+        }
+        .date-input-wrapper::after {
+            content: '📅';
+            position: absolute;
+            right: 12px;
+            top: 38px;
+            pointer-events: none;
+        }
+
+        .map-emoji {
+            background: white;
+            border: 2px solid #00ff88;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .custom-leaflet-icon { background: none; border: none; }
+    </style>
+</head>
+<body>
+
+    <header class="glass-header">
+        <div class="header-content">
+            <a href="index.html" class="btn btn-secondary">← До списку</a>
+            <h1 id="trip-title">Завантаження подорожі...</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Навігація по табах -->
+        <div class="tabs">
+            <button class="btn tab-btn active" data-target="overview">Огляд</button>
+            <button class="btn tab-btn" data-target="expenses">Витрати</button>
+            <button class="btn tab-btn" data-target="distance">Кроки</button>
+            <button class="btn tab-btn" data-target="map-view">Карта</button>
+            <button class="btn tab-btn" data-target="notes-section">Нотатки</button>
+        </div>
+
+        <!-- ТАБ: ОГЛЯД -->
+        <div id="overview" class="tab-content active glass-card">
+            <div id="budget-info" class="budget-stats"></div>
+            <hr>
+            <h3>Категорії (EUR)</h3>
+            <div id="category-summary" class="category-grid"></div>
+        </div>
+
+        <!-- ТАБ: ВИТРАТИ -->
+        <div id="expenses" class="tab-content glass-card">
+            <div class="section-header">
+    <div>
+        <h2>Логістика та чеки</h2>
+        <label class="toggle-label">
+            <input type="checkbox" id="cascade-toggle" onchange="toggleCascadeMode()">
+            <span>Каскади Регіони</span>
+        </label>
+    </div>
+    <button id="add-expense-btn" class="btn btn-success">+ Додати витрату</button>
+</div>
+            
+            <h3>✈️ Транспорт</h3>
+            <!-- Заміни header транспортної таблиці на (5 колонок): -->
+<table id="transport-table" class="data-table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Маршрут / Опис</th>
+            <th>Сума</th>
+            <th>Валюта</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+            <h3>🏠 Житло</h3>
+            <table id="hotels-table" class="data-table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Місце / Опис</th>
+            <th>Сума</th>
+            <th>Валюта</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+            <h3>🍴 Харчування та інше</h3>
+            <table id="daily-expenses-table" class="data-table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Місце / Опис</th>
+            <th>Сума</th>
+            <th>Валюта</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+        </div>
+
+        <!-- ТАБ: ДИСТАНЦІЯ -->
+        <div id="distance" class="tab-content glass-card">
+            <div class="section-header">
+                <h2>Активність</h2>
+                <button id="add-walking-btn" class="btn btn-success">+ Новий день</button>
+            </div>
+            <table id="walking-table" class="data-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Місто</th>
+                        <th>Кроки</th>
+                        <th>Км</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- ТАБ: КАРТА -->
+        <div id="map-view" class="tab-content">
+            <div id="map" style="height: 600px; width: 100%; border-radius: 20px; border: 2px solid rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <!-- НОТАТКИ -->
+<div id="notes-section" class="tab-content glass-card">
+    <div class="section-header">
+        <h2>Записи</h2>
+        <button id="add-note-btn" class="btn btn-success">+ Додати нотатку</button>
+    </div>
+    
+    <table id="notes-table" class="data-table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Місце</th>
+                <th>Нотатка</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+    </main>
+
+    <!-- МОДАЛКА ВИТРАТ -->
+    <div id="expense-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-card">
+            <h2>Новий запис</h2>
+            <form id="expense-form">
+                <div class="form-group">
+                    <label>Категорія</label>
+                    <select id="exp-category">
+                        <option value="Food">🍴 Харчування/Інше</option>
+                        <option value="Hotel">🏠 Житло</option>
+                        <option value="Transport">✈️ Транспорт</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Назва / Опис</label>
+                    <input type="text" id="exp-title" placeholder="Напр: Готель 'Морський'" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Сума</label>
+                        <input type="number" id="exp-amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Валюта</label>
+                        <select id="exp-currency">
+                            <option value="EUR">EUR</option>
+                            <option value="UAH">UAH</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Місце (Місто/Об'єкт)</label>
+                    <div id="geocoder-container"></div> <!-- Контейнер для Smart Search -->
+                    <button type="button" id="select-on-map-btn" class="btn btn-secondary" style="width:100%; margin-top:8px;">
+                        📍 Обрати кліком на карті
+                    </button>
+                    <!-- Всередині форми, наприклад після кнопки "select-on-map-btn" -->
+<button type="button" id="use-geolocation-btn" class="btn btn-secondary" style="width:100%; margin-top:8px;">
+    📍 Використати мою геолокацію
+</button>
+                    <!-- Приховані поля для логіки БД -->
+                    <input type="hidden" id="exp-city-name">
+                    <input type="hidden" id="exp-city-lat">
+                    <input type="hidden" id="exp-city-lng">
+                </div>
+
+                <!-- Поля для транспорту (показуються скриптом) -->
+                <!-- Заміни transport-fields на: -->
+<div id="transport-fields" class="hidden">
+
+    <div class="form-group">
+        <label>Тип транспорту</label>
+        <select id="exp-transport-type">
+            <option value="plane">✈️ Літак</option>
+            <option value="train">🚂 Потяг</option>
+            <option value="bus">🚌 Автобус</option>
+            <option value="car">🚗 Авто</option>
+            <option value="ship">🚢 Корабель</option>
+            <option value="metro">🚇 Метро</option>
+            <option value="tram">🚊 Трамвай</option>
+            <option value="bike">🚲 Велосипед</option>
+            <option value="ferry">⛴️ Паром</option>
+            <option value="helicopter">🚁 Гелікоптер</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label>Звідки</label>
+            <input type="text" id="exp-from-city" placeholder="Місто відправлення">
+            <input type="hidden" id="exp-from-lat">
+            <input type="hidden" id="exp-from-lng">
+        </div>
+        <div class="form-group">
+            <label>Куди</label>
+            <input type="text" id="exp-to-city" placeholder="Місто прибуття">
+            <input type="hidden" id="exp-to-lat">
+            <input type="hidden" id="exp-to-lng">
+        </div>
+    </div>
+
+</div>
+
+                <div class="form-row">
+                    <div class="form-group date-input-wrapper">
+                        <label>Дата</label>
+                        <input type="date" id="exp-date" required>
+                    </div>
+                    <div class="form-group time-group" style="display: flex; gap: 12px; align-items: flex-end;">
+    <div style="flex: 1;">
+        <label for="exp-time">Час</label>
+        <input type="time" id="exp-time" value="00:00">
+    </div>
+    <button type="button" id="use-current-time-btn" class="btn btn-secondary" style="margin-bottom: 2px; padding: 8px 14px;">
+        ⏰ Час
+    </button>
+</div>
+                    <div class="form-group">
+                        <label>Статус</label>
+                        <select id="exp-is-planned">
+                            <option value="false">✅ Оплачено</option>
+                            <option value="true">⏳ План</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="close-exp-btn" class="btn">Скасувати</button>
+                    <button type="submit" class="btn btn-success">Зберегти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- МОДАЛКА КРОКІВ -->
+<div id="walking-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card">
+        <h2>Додати прогулянку / кроки</h2>
+        <form id="walking-form">
+            
+            <div class="form-group">
+                <label>Дата</label>
+                <input type="date" id="walk-date" required>
+            </div>
+
+            <!-- Toggle кнопка замість галочки -->
+            <button type="button" id="toggle-endpoint-btn" class="btn btn-secondary toggle-btn active">
+                ✓ Є кінцева точка (маршрут з А в Б)
+            </button>
+
+            <!-- Початкова точка -->
+            <div class="form-group">
+                <label>Початкова точка</label>
+                <input type="text" id="walk-start-name" placeholder="Назва початку" readonly>
+                <input type="hidden" id="walk-start-lat">
+                <input type="hidden" id="walk-start-lng">
+                
+                <div class="button-group">
+                    <button type="button" id="select-start-on-map" class="btn btn-secondary">
+                        📍 Вибрати на карті
+                    </button>
+                    <button type="button" id="use-geolocation-start" class="btn btn-secondary">
+                        📍 Моя геолокація
+                    </button>
+                </div>
+            </div>
+
+            <!-- Кінцева точка -->
+            <div id="walk-end-group">
+                <div class="form-group">
+                    <label>Кінцева точка</label>
+                    <input type="text" id="walk-end-name" placeholder="Назва кінця" readonly>
+                    <input type="hidden" id="walk-end-lat">
+                    <input type="hidden" id="walk-end-lng">
+                    
+                    <div class="button-group">
+                        <button type="button" id="select-end-on-map" class="btn btn-secondary">
+                            📍 Вибрати на карті
+                        </button>
+                        <button type="button" id="use-geolocation-end" class="btn btn-secondary">
+                            📍 Моя геолокація
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Кроки</label>
+                    <input type="number" id="walk-steps" placeholder="Кількість кроків" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Відстань (км)</label>
+                    <input type="number" id="walk-km" placeholder="Кілометри" step="0.1" required>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="close-walk-btn" class="btn">Скасувати</button>
+                <button type="submit" id="walk-submit-btn" class="btn btn-success" disabled>Зберегти</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- МОДАЛКА НОТАТОК -->
+<div id="note-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card">
+        <h2 id="note-modal-title">Додати нотатку</h2>
+        
+        <form id="note-form">
+            
+            <div class="form-group">
+                <label>Дата</label>
+                <input type="date" id="note-date" required>
+            </div>
+
+            <div class="form-group time-group" style="display:flex; gap:12px; align-items:flex-end;">
+                <div style="flex:1;">
+                    <label>Час</label>
+                    <input type="time" id="note-time" value="00:00">
+                </div>
+                <button type="button" id="use-current-time-note" class="btn btn-secondary">⏰ Зараз</button>
+            </div>
+
+            <div class="form-group">
+                <label>Місце</label>
+                <input type="text" id="note-city-name" placeholder="Назва місця" readonly>
+                <input type="hidden" id="note-lat">
+                <input type="hidden" id="note-lng">
+                
+                <div class="button-group">
+                    <button type="button" id="select-note-on-map" class="btn btn-secondary">
+                        📍 Вибрати на карті
+                    </button>
+                    <button type="button" id="use-geolocation-note" class="btn btn-secondary">
+                        📍 Моя геолокація
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Текст нотатки</label>
+                <textarea id="note-text" rows="6" placeholder="Напишіть вашу нотатку..." required></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="close-note-btn" class="btn">Скасувати</button>
+                <button type="submit" class="btn btn-success">Зберегти нотатку</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- VIEW NOTE MODAL -->
+<div id="view-note-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-card view-note-content">
+
+        <div class="view-note-header">
+            <div>
+                <h2 id="view-note-date"></h2>
+                <div id="view-note-time" class="view-note-time"></div>
+            </div>
+
+            <button onclick="closeViewNote()" class="btn btn-secondary">
+                ✖
+            </button>
+        </div>
+
+        <div id="view-note-location" class="view-note-location"></div>
+
+        <div id="view-note-text" class="view-note-text"></div>
+
+        <div class="modal-actions" style="margin-top:20px;">
+            <button
+                type="button"
+                onclick="closeViewNote()"
+                class="btn"
+            >
+                Закрити
+            </button>
+        </div>
+
+    </div>
+</div>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script type="module" src="js/trip-controller.js"></script>
+
+</body>
+</html>
