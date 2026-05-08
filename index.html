@@ -2,75 +2,87 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Travel Planner</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Travel Planner</title>
 </head>
-<!-- Modal Create Trip -->
-<div id="create-trip-modal" class="modal-overlay hidden">
-    <div class="modal-content">
-        <h2>Plan New Trip</h2>
-        <form id="create-trip-form">
-            <div class="form-group">
-                <label>Trip Title (e.g., Summer in Italy)</label>
-                <input type="text" id="trip-title-input" required>
-            </div>
-            <div style="display: flex; gap: 1rem;">
-                <div class="form-group" style="flex: 1;">
-                    <label>Start Date</label>
-                    <input type="date" id="trip-start" required>
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>End Date</label>
-                    <input type="date" id="trip-end" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Estimated Budget</label>
-                <input type="number" id="trip-budget" min="1" required>
-            </div>
-            <div class="form-group">
-                <label>Main Currency</label>
-                <select id="trip-currency">
-                    <option value="EUR">EUR (€)</option>
-                    <option value="USD">USD ($)</option>
-                    <option value="UAH">UAH (₴)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Cover Image URL (Optional)</label>
-                <input type="url" id="trip-image" placeholder="https://unsplash.com/...">
-            </div>
-            <div class="modal-actions">
-                <button type="button" id="close-modal-btn" class="btn">Cancel</button>
-                <button type="submit" class="btn btn-success">Create & Lock Currency</button>
-            </div>
-        </form>
-    </div>
-</div>
-<body>
-    <header class="glass-header">
-        <h1>Travel Planner</h1>
-        <button id="logout-btn" class="btn hidden">Logout</button>
-    </header>
 
-    <main>
-        <section id="auth-section" class="center-content">
-            <h2>Welcome to your journey</h2>
-            <button id="login-btn" class="btn btn-primary">Sign in with Google</button>
-        </section>
+<body bgcolor="#eef6fb" link="#0066cc" vlink="#663399" alink="#cc0000">
 
-        <section id="dashboard-section" class="hidden">
-            <div class="dashboard-header">
-                <h2>Active Trips</h2>
-                <button id="add-trip-btn" class="btn btn-success">+ New Trip</button>
-            </div>
-            <div id="trips-container" class="grid-container">
-                <!-- Trip cards will be injected here via app.js -->
-            </div>
-        </section>
-    </main>
+<h1 id="top">Travel Planner</h1>
 
-    <script type="module" src="js/app.js"></script>
+<p>
+    <b>Travel Planner</b> — це невеликий сайт для планування подорожей.
+    Тут можна знайти напрямки, поради та ідеї для майбутньої поїздки.
+</p>
+
+<p>
+    <i>Подорожі допомагають відкривати нові місця, знайомитися з культурою інших країн
+    та отримувати нові враження.</i>
+</p>
+
+<p id="main-info">
+    На цій сторінці розміщена основна інформація про сайт та навігація між сторінками.
+</p>
+
+<hr>
+
+<h2>Меню сайту</h2>
+
+<a href="index.html">Головна</a> |
+<a href="destinations.html">Напрямки</a> |
+<a href="tips.html">Поради</a> |
+<a href="gallery.html">Галерея</a>
+
+<br><br>
+
+<a href="#main-info">Перейти до абзацу на цій сторінці</a><br>
+<a href="destinations.html#europe">Перейти до розділу на іншій сторінці</a><br>
+<a href="https://www.booking.com" target="_blank">Перейти на Booking</a>
+
+<hr>
+
+<h2>Картинка-посилання</h2>
+
+<p>Натисни на картинку, щоб відкрити її у повному розмірі.</p>
+
+<a href="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200" target="_blank">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600"
+         width="300" height="200" alt="Море">
+</a>
+
+<hr>
+
+<h2>Що можна планувати</h2>
+
+<ol type="1">
+    <li>Країну для подорожі</li>
+    <li>Транспорт</li>
+    <li>Готель</li>
+    <li>Маршрут</li>
+</ol>
+
+<ul type="square">
+    <li>Паспорт</li>
+    <li>Квитки</li>
+    <li>Страхування</li>
+</ul>
+
+<dl>
+    <dt><b>Маршрут</b></dt>
+    <dd>План пересування під час подорожі.</dd>
+
+    <dt><b>Бронювання</b></dt>
+    <dd>Попереднє замовлення житла або квитків.</dd>
+</dl>
+
+<hr>
+
+<h2>Плаваючий фрейм</h2>
+
+<iframe src="tips.html" width="600" height="300"></iframe>
+
+<br><br>
+
+<a href="#top">Повернутися нагору</a>
+
 </body>
 </html>
