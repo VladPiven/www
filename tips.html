@@ -11,9 +11,42 @@
             color: green;
         }
     </style>
+
+    <!-- Внутрішній скрипт -->
+    <script>
+        function showAlert() {
+            alert("Вітаємо на сторінці порад для туриста!");
+        }
+
+        function askName() {
+            let userName = prompt("Введіть ваше ім'я:");
+
+            if (userName == null || userName == "") {
+                alert("Ім'я не було введено.");
+            } else {
+                alert("Привіт, " + userName + "! Раді бачити вас на сайті.");
+            }
+        }
+
+        function confirmTrip() {
+            let answer = confirm("Ви вже плануєте подорож?");
+
+            if (answer) {
+                document.getElementById("confirm-result").innerHTML =
+                    "Користувач планує подорож.";
+            } else {
+                document.getElementById("confirm-result").innerHTML =
+                    "Користувач поки що не планує подорож.";
+            }
+        }
+    </script>
 </head>
 
 <body>
+
+<script>
+    document.write("<p><b>Цей текст додано за допомогою document.write.</b></p>");
+</script>
 
 <h1 id="top">Поради туристу</h1>
 
@@ -25,12 +58,35 @@
 <hr>
 
 <p style="font-size: 19px; color: brown;">
-    <b>Перед подорожжю</b> важливо перевірити документи та квитки.
+    <b>Перед подорожжю</b> важливо перевірити документи, квитки та бронювання.
 </p>
 
-<p>
+<p id="dom-text">
     <i>Також рекомендується заздалегідь скласти маршрут поїздки.</i>
 </p>
+
+<p id="confirm-result">
+    Тут буде виведено результат роботи функції confirm.
+</p>
+
+<p id="replace-note">Цей текст буде замінено за допомогою JavaScript.</p>
+
+<hr>
+
+<h2>Кнопки для роботи з JavaScript</h2>
+
+<button onclick="showAlert()">Показати alert</button>
+<button onclick="askName()">Використати prompt</button>
+<button onclick="confirmTrip()">Використати confirm</button>
+
+<br><br>
+
+<button onclick="dialogWithUser()">Діалог з користувачем</button>
+<button onclick="showDeveloperInfo('Іваненко', 'Марія', 'Найкращий розробник')">Інформація про розробника</button>
+<button onclick="compareStrings()">Порівняти два рядки</button>
+<button onclick="changeBackground()">Змінити фон на 30 секунд</button>
+<button onclick="redirectToGallery()">Перейти на іншу сторінку</button>
+<button onclick="changeDOM()">Змінити DOM сторінки</button>
 
 <hr>
 
@@ -70,7 +126,9 @@
 
 <hr>
 
-<ul type="circle">
+<h2>Список речей</h2>
+
+<ul type="circle" id="travel-list">
     <li>Аптечка</li>
     <li>Зарядний пристрій</li>
     <li>Документи</li>
@@ -82,9 +140,19 @@
     <li>Приїхати вчасно</li>
 </ol>
 
+<hr>
+
+<h2>Блок для додавання елементів через JavaScript</h2>
+
+<div id="js-block">
+    <p>Тут будуть з’являтися нові елементи.</p>
+</div>
+
 <br>
 
 <a href="#top">Повернутися нагору</a>
+
+<script src="script.js"></script>
 
 </body>
 </html>
