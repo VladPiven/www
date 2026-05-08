@@ -128,3 +128,63 @@ h2 + p {
     padding: 10px;
     border-left: 4px solid green;
 }
+/* Блочні елементи */
+.content-block {
+    width: 40%;
+    background-color: white;
+    padding: 15px;
+    margin: 15px;
+    border: 2px solid #99ccff;
+
+    position: relative;
+    left: 20px;
+}
+
+/* Плаваючий блок */
+.float-block {
+    width: 250px;
+    background-color: #fff2cc;
+    border: 2px solid orange;
+    padding: 15px;
+
+    float: right;
+    margin: 10px;
+}
+
+/* Рядковий елемент */
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+/* Псевдокласи посилань */
+a:link {
+    color: blue;
+}
+
+a:visited {
+    color: purple;
+}
+
+a:hover {
+    color: red;
+}
+
+a:active {
+    color: green;
+}
+
+/* Псевдоклас */
+ul li:first-child {
+    color: darkred;
+    font-size: 20px;
+}
+
+/* Псевдоелементи */
+h1::before {
+    content: "✈ ";
+}
+
+h1::after {
+    content: " ✈";
+}
