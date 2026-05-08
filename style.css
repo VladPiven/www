@@ -112,3 +112,19 @@ img {
 iframe {
     border: 4px solid #0066cc;
 }
+
+table a {
+    color: darkred;
+    font-style: italic;
+}
+
+ul > li {
+    font-weight: bold;
+    color: #003366;
+}
+
+h2 + p {
+    background-color: #e6ffe6;
+    padding: 10px;
+    border-left: 4px solid green;
+}
