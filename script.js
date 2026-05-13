@@ -96,7 +96,7 @@ function redirectToGallery() {
 
 
 // Робота з DOM
-function changeDOM() {
+async function changeDOM() {
 
     // getElementById
     let title = document.getElementById("top");
@@ -112,27 +112,26 @@ function changeDOM() {
 
     // innerHTML
     let textBlock = document.getElementById("dom-text");
-    textBlock.innerHTML = "<b>Цей текст був змінений за допомогою innerHTML.</b>";
+    textBlock.innerHTML = "<b>Краще перевірити все другий раз.</b>";
 
     // textContent
     let confirmResult = document.getElementById("confirm-result");
-    confirmResult.textContent = "Цей текст був змінений за допомогою textContent.";
+    confirmResult.textContent = "Квитки на літак зазвичай коштують багато і не повертаються.";
 
     // nodeValue / data
     let note = document.getElementById("replace-note");
     let textNode = note.firstChild;
 
-    textNode.nodeValue = "Спочатку текст був змінений через nodeValue.";
-    textNode.data = "Потім цей самий текст був змінений через data.";
-
+    textNode.nodeValue = "Варто поїхати в іспанію.";
+    textNode.data = "Або в португалію!";
     // outerHTML
-    note.outerHTML = "<p id='new-note'><b>Цей абзац повністю замінено за допомогою outerHTML.</b></p>";
-
+    note.outerHTML = "<p id='new-note'><b>І мадейра і тенеріфе обидва дуже гарні!</b></p>";
+    
     // document.createElement
     let newParagraph = document.createElement("p");
 
     // document.createTextNode
-    let newText = document.createTextNode("Новий абзац створено за допомогою createElement і createTextNode.");
+    let newText = document.createTextNode("Але ж є ще Азори, оооо, Азори...");
 
     newParagraph.append(newText);
 
@@ -143,30 +142,30 @@ function changeDOM() {
 
     // prepend
     let startText = document.createElement("p");
-    startText.textContent = "Цей абзац додано на початок блоку за допомогою prepend.";
+    startText.textContent = "Якщо є роздуми їхати чи ні - завжди варто!";
     jsBlock.prepend(startText);
 
     // after
     let afterText = document.createElement("p");
-    afterText.textContent = "Цей абзац додано після блоку за допомогою after.";
+    afterText.textContent = "Нехай буде цікава подорож!";
     jsBlock.after(afterText);
 
     // replaceWith
     let replaceElement = document.createElement("p");
-    replaceElement.textContent = "Цей абзац буде замінено.";
+    replaceElement.textContent = "Зміни можливі, і не до всіх можна бути готовим.";
 
     jsBlock.append(replaceElement);
 
     let newReplaceElement = document.createElement("p");
-    newReplaceElement.textContent = "Абзац успішно замінено за допомогою replaceWith.";
+    newReplaceElement.textContent = "Краще їхати, ніж не їхати";
     replaceElement.replaceWith(newReplaceElement);
 
     // remove
     let removeElement = document.createElement("p");
-    removeElement.textContent = "Цей абзац був створений, але одразу видалений.";
+    removeElement.textContent = "В лондоні безпечно(цей текст зникне як і відчуття безпеки в перший день:)";
     jsBlock.append(removeElement);
 
     removeElement.remove();
 
-    alert("Готово! На сторінці були змінені заголовок, текст, список і блок з інформацією.");
+    alert("Секрети відкриті.");
 }
