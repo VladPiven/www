@@ -36,7 +36,7 @@ function dialogWithUser() {
 
 // Функція виводу інформації про розробника сторінки
 // Параметр "посада" має значення за замовчуванням
-function showDeveloperInfo(lastName, firstName, position = "Найкращий розробник") {
+function showDeveloperInfo(lastName, firstName, position) {
     alert(
         "Інформація про розробника сторінки:\n\n" +
         "Прізвище: " + lastName + "\n" +
@@ -66,20 +66,19 @@ function compareStrings() {
 }
 
 
-// Зміна фону сторінки на 30 секунд
 function changeBackground() {
     let oldBackground = document.body.style.backgroundColor;
 
-    document.body.style.setProperty("background-color", "#ffe6f2", "important");
+    document.body.style.setProperty("background-color", "#ff8dc4", "important");
 
-    alert("Фон сторінки тимчасово змінено на 30 секунд.");
+    alert("Рожеевииий.");
 
     setTimeout(function () {
         document.body.style.backgroundColor = oldBackground;
         document.body.style.removeProperty("background-color");
 
         alert("Фон сторінки повернувся до початкового кольору.");
-    }, 30000);
+    }, 3000);
 }
 
 
