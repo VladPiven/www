@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <script src="script2.js"></script>
     <meta charset="UTF-8">
-    <title>Напрямки</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Напрямки - Подорожі</title>
     <link rel="stylesheet" href="style.css">
-
+    
     <style>
-        a {
-            color: darkorange;
+        a { color: darkorange; }
+        li, td, th { transition: all 0.3s; }
+        .highlighted { 
+            background-color: #ffeb3b !important; 
+            color: darkblue !important; 
+            font-weight: bold; 
         }
     </style>
 </head>
@@ -51,49 +54,41 @@
 <h2>Таблиця 3 × 4</h2>
 
 <table border="1" cellpadding="10" cellspacing="3">
-
     <caption><b>Країни для подорожей</b></caption>
-
     <tr>
         <th>Франція</th>
         <th>Італія</th>
         <th>Іспанія</th>
         <th>Греція</th>
     </tr>
-
     <tr>
-        <td><img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300"
-                 width="120" height="80"></td>
-
-        <td><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=300"
-                 width="120" height="80"></td>
-
-        <td><img src="https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=300"
-                 width="120" height="80"></td>
-
-        <td><img src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=300"
-                 width="120" height="80"></td>
+        <td><img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300" 
+                 width="120" height="80" alt="Франція"></td>
+        <td><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=300" 
+                 width="120" height="80" alt="Італія"></td>
+        <td><img src="https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=300" 
+                 width="120" height="80" alt="Іспанія"></td>
+        <td><img src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=300" 
+                 width="120" height="80" alt="Греція"></td>
     </tr>
-
     <tr>
-        <td><a href="https://en.wikipedia.org/wiki/France">France</a></td>
-        <td><a href="https://en.wikipedia.org/wiki/Italy">Italy</a></td>
-        <td><a href="https://en.wikipedia.org/wiki/Spain">Spain</a></td>
-        <td><a href="https://en.wikipedia.org/wiki/Greece">Greece</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/France" target="_blank">France</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/Italy" target="_blank">Italy</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/Spain" target="_blank">Spain</a></td>
+        <td><a href="https://en.wikipedia.org/wiki/Greece" target="_blank">Greece</a></td>
     </tr>
-
     <tr>
         <td>Країна романтики.</td>
         <td>Країна архітектури.</td>
         <td>Країна сонця.</td>
         <td>Країна островів.</td>
     </tr>
-
 </table>
 
 <br>
-
 <a href="#top">Повернутися нагору</a>
+
+<script src="script2.js"></script>
 
 </body>
 </html>
