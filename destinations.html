@@ -3,92 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Напрямки - Подорожі</title>
+    <title>Напрямки — Подорожі</title>
     <link rel="stylesheet" href="style.css">
     
-    <style>
-        a { color: darkorange; }
-        li, td, th { transition: all 0.3s; }
-        .highlighted { 
-            background-color: #ffeb3b !important; 
-            color: darkblue !important; 
-            font-weight: bold; 
-        }
-    </style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+    h1 { color: #2c3e50; text-align: center; }
+    a { color: #e67e22; }
+    a:hover { text-decoration: underline; }
+
+    #country-list {
+        list-style: none;
+        padding: 0;
+    }
+    #country-list li {
+        background: white;
+        padding: 15px 20px;
+        margin: 8px 0;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        cursor: grab;
+        font-size: 1.1em;
+        
+        /* Заборона виділення тексту */
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+    .highlighted {
+        background-color: #fff176 !important;
+        border-left: 5px solid #e67e22;
+    }
+    .dragging {
+        opacity: 0.5;
+        transform: scale(0.98);
+    }
+    .placeholder {
+        border: 2px dashed #e67e22;
+        background: #fff3e0;
+        height: 58px;
+        border-radius: 10px;
+    }
+
+    table { margin: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+    img { border-radius: 8px; cursor: grab; }
+</style>
 </head>
 
 <body>
 
-<h1 id="top">Популярні напрямки</h1>
+    <h1 id="top">🌍 Популярні туристичні напрямки</h1>
 
-<a class="menu-link" href="index.html">Головна</a> |
-<a class="menu-link" href="destinations.html">Напрямки</a> |
-<a class="menu-link" href="tips.html">Поради</a> |
-<a class="menu-link" href="gallery.html">Галерея</a>
+    <nav>
+        <a class="menu-link" href="index.html">Головна</a> |
+        <a class="menu-link" href="destinations.html">Напрямки</a> |
+        <a class="menu-link" href="tips.html">Поради мандрівникам</a> |
+        <a class="menu-link" href="gallery.html">Галерея</a>
+    </nav>
 
-<hr>
+    <hr>
 
-<p style="color: darkblue;">
-    <b>Європа</b> є одним із найпопулярніших напрямків для туристів.
-</p>
+    <p style="color: darkblue; font-size: 1.15em;">
+        <b>Європа</b> — один із найулюбленіших континентів для мандрівників.
+    </p>
 
-<ul id="country-list">
-    <li>Португалія</li>
-    <li>Ірландія</li>
-    <li>Ісландія</li>
-    <li>Норвегія</li>
-</ul>
+    <h2>Оберіть напрямок для подорожі</h2>
+    <ul id="country-list">
+        <li>🇵🇹 Португалія — країна тепла та відкриттів</li>
+        <li>🇮🇪 Ірландія — зелений острів легенд</li>
+        <li>🇮🇸 Ісландія — земля вогню та льоду</li>
+        <li>🇳🇴 Норвегія — країна фьордів та північного сяйва</li>
+    </ul>
 
-<div id="menu">
-    <button data-action="home">Головна</button>
-    <button data-action="scrollTop">Вгору</button>
-    <button data-action="alert">Повідомлення</button>
-</div>
+    <div id="menu">
+        <button data-action="home">🏠 На головну</button>
+        <button data-action="scrollTop">⬆ Вгору</button>
+        <button onclick="mouseClickHandler(event)">📢 Повідомлення </button>
+    </div>
 
-<p id="europe">
-    <i>Франція, Італія та Іспанія щороку приваблюють мільйони туристів.</i>
-</p>
+    <p id="europe">
+        <i>Франція, Італія, Іспанія та Греція щороку приваблюють мільйони туристів.</i>
+    </p>
 
-<hr>
+    <hr>
 
-<h2>Таблиця 3 × 4</h2>
+    <h2>Країни мрії</h2>
 
-<table border="1" cellpadding="10" cellspacing="3">
-    <caption><b>Країни для подорожей</b></caption>
-    <tr>
-        <th>Франція</th>
-        <th>Італія</th>
-        <th>Іспанія</th>
-        <th>Греція</th>
-    </tr>
-    <tr>
-        <td><img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300" 
-                 width="120" height="80" alt="Франція"></td>
-        <td><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=300" 
-                 width="120" height="80" alt="Італія"></td>
-        <td><img src="https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=300" 
-                 width="120" height="80" alt="Іспанія"></td>
-        <td><img src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=300" 
-                 width="120" height="80" alt="Греція"></td>
-    </tr>
-    <tr>
-        <td><a href="https://en.wikipedia.org/wiki/France" target="_blank">France</a></td>
-        <td><a href="https://en.wikipedia.org/wiki/Italy" target="_blank">Italy</a></td>
-        <td><a href="https://en.wikipedia.org/wiki/Spain" target="_blank">Spain</a></td>
-        <td><a href="https://en.wikipedia.org/wiki/Greece" target="_blank">Greece</a></td>
-    </tr>
-    <tr>
-        <td>Країна романтики.</td>
-        <td>Країна архітектури.</td>
-        <td>Країна сонця.</td>
-        <td>Країна островів.</td>
-    </tr>
-</table>
+    <table border="1" cellpadding="12" cellspacing="3">
+        <caption><b>Популярні європейські напрямки</b></caption>
+        <tr>
+            <th>Франція</th>
+            <th>Італія</th>
+            <th>Іспанія</th>
+            <th>Греція</th>
+        </tr>
+        <tr>
+            <td><img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300" width="140" height="90" alt="Франція"></td>
+            <td><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=300" width="140" height="90" alt="Італія"></td>
+            <td><img src="https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=300" width="140" height="90" alt="Іспанія"></td>
+            <td><img src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?w=300" width="140" height="90" alt="Греція"></td>
+        </tr>
+        <tr>
+            <td><a href="https://en.wikipedia.org/wiki/France" target="_blank">France</a></td>
+            <td><a href="https://en.wikipedia.org/wiki/Italy" target="_blank">Italy</a></td>
+            <td><a href="https://en.wikipedia.org/wiki/Spain" target="_blank">Spain</a></td>
+            <td><a href="https://en.wikipedia.org/wiki/Greece" target="_blank">Greece</a></td>
+        </tr>
+        <tr>
+            <td>Країна романтики та вишуканого смаку</td>
+            <td>Країна мистецтва та історії</td>
+            <td>Країна сонця та фламенко</td>
+            <td>Країна морів та античності</td>
+        </tr>
+    </table>
 
-<br>
-<a href="#top">Повернутися нагору</a>
+    <br>
+    <a href="#top" style="font-size: 1.1em;">↑ Повернутися нагору</a>
 
-<script src="script2.js"></script>
-
+    <script src="script2.js"></script>
 </body>
 </html>
