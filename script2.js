@@ -1,6 +1,4 @@
-// script2.js
-
-// Глобальна функція для призначення через атрибут onclick
+// через атрибут onclick
 window.mouseClickHandler = function(e) {
     console.log(`🔥 Клік через onclick-атрибут! Тип: ${e.type}`);
     alert('Дякуємо! Бажаємо приємної подорожі! 🌍✈️');
@@ -10,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('%c✅ script2.js завантажено — повністю відповідає ТЗ', 'color: lime; font-weight: bold');
 
-    // ====================== 1. ПОДІЇ МИШІ ======================
+    // mouseaction
 
     // Через властивість
     const homeBtn = document.querySelector('button[data-action="home"]');
@@ -31,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     h1.addEventListener('click', handler1);
     h1.addEventListener('click', handler2);
 
-    // Об'єкт як обробник + handleEvent + currentTarget
+    // обробник + handleEvent + currentTarget
     const handlerObject = {
         handleEvent(e) {
             console.log('handleEvent спрацював! Елемент:', e.currentTarget.tagName);
@@ -50,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 8000);
 
 
-    // ====================== 2. СПИСОК + ПІДСВІЧУВАННЯ ======================
+    // СПИСОК + ПІДСВІЧУВАННЯ
 
     const countryList = document.getElementById('country-list');
 
@@ -65,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     countryList.addEventListener('click', listClickHandler);
 
 
-    // ====================== 3. DRAG & DROP (mousedown + mousemove + mouseup) ======================
+    // DRAG & DROP
 
     let draggedItem = null;
     let placeholder = null;
@@ -120,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseup', endDrag);
 
 
-    // ====================== 4. МЕНЮ З data-* (Поведінка) ======================
+    // data-* 
 
     const menu = document.getElementById('menu');
 
@@ -141,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.addEventListener('click', menuHandler);
 
 
-    // ====================== 5. mouseover / mouseout + event.relatedTarget ======================
+    // mouseover / mouseout + event.relatedTarget
 
     function mouseMoveHandler(e) {
         const target = e.target;
@@ -169,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Призначаємо обробники
+    // обробники
     document.addEventListener('mouseover', mouseMoveHandler);
     document.addEventListener('mouseout', mouseLeaveHandler);
 
