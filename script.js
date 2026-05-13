@@ -96,7 +96,7 @@ function redirectToGallery() {
 
 
 // Робота з DOM
-async function changeDOM() {
+function changeDOM() {
 
     // getElementById
     let title = document.getElementById("top");
